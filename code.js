@@ -55,10 +55,8 @@ class Card {
 const library = [];
 
 document.addEventListener('click', (e) => {
-  console.log(e);
   if (e.target.alt === "delete") {
     const id = e.target.parentElement.id;
-    console.log(e.target.parentElement.id)
     library.splice(id, 1);
     renderLibrary();
   }
@@ -68,8 +66,15 @@ document.addEventListener('click', (e) => {
   const idSplit = e.target.id.split(' ');
   if (idSplit[1] === "status") {
     library[idSplit[0]].toggleRead();
-    console.log(idSplit)
     renderLibrary();
+    let button = document.getElementById(e.target.id);
+    if (button.innerHTML === "Read") {
+      console.log(button)
+      button.innerHTML = "Not Read";
+    } else {
+      console.log(button)
+      button.innerHTML = "Read";
+    }
   }
 })
 
@@ -110,10 +115,7 @@ addBookButton.addEventListener('click', () => {
 
 const bookForm = document.querySelector(".create-book");
 
-
-
 const libraryList = document.querySelector('.library-list');
-
 
 function addBookToDom(obj, idx) {
   const card = new Card();
@@ -135,15 +137,6 @@ function addBookToDom(obj, idx) {
   libraryList.appendChild(card.card);
 }
 
-function addBookToArray(title, author, pages, read) {
-  library.push(new Book(title, author, pages, read))
-  renderLibrary();
-}
-
-addBookToArray("Harry Potter", "Transpohbia", 151, false)
-addBookToArray("Harry Potter 2", "Transpohbia", 345, false)
-addBookToArray("Lord of the Rings", "J.R.R Tolkien", 1000, true)
-
 function renderLibrary() {
   while (libraryList.lastElementChild) {
     libraryList.removeChild(libraryList.lastElementChild)
@@ -152,3 +145,14 @@ function renderLibrary() {
     addBookToDom(el, idx);
   })
 }
+
+function addBookToArray(title, author, pages, read) {
+  library.push(new Book(title, author, pages, read))
+  renderLibrary();
+}
+
+addBookToArray("Harry Potter", "J.K Rowling", 151, false)
+addBookToArray("Harry Potter 2", "J.K Rowling", 345, false)
+addBookToArray("Lord of the Rings", "J.R.R Tolkien", 1000, true)
+
+
