@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./code.js" defer></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="title">Library</h1>
+    <p class="header-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere corporis, ipsa cumque animi
+      vitae repudiandae
+      accusantium ratione voluptas. Placeat, quidem. Placeat molestias ipsum eius facilis magni dolores vero enim quod!
+    </p>
+    <div class="library-list">
+      <div class="library-card">
+        <h3 class="card-title">A Song of Ice and Fire</h3>
+        <h4 class="card-author">Author:</h4>
+        <p class="card-text">George R R Martin Junior</p>
+        <h4 class="card-pages">Pages:</h4>
+        <p class="card-text">365262727</p>
+        <h4 class="card-status">Status:</h4>
+        <p class="card-text">Not read</p>
+        <button class="toggle-read">Read?</button>
+        <img class="delete-book" src="./trash-svgrepo-com.svg" alt="delete">
+      </div>
+      <div class="library-card">
+        <h3 class="card-title">A Song of Ice and Fire</h3>
+        <h4 class="card-author">Author:</h4>
+        <p class="card-text">George R R Martin Junior</p>
+        <h4 class="card-pages">Pages:</h4>
+        <p class="card-text">365262727</p>
+        <h4 class="card-status">Read:</h4>
+        <p class="card-text">Not read</p>
+      </div>
+
+      <div class="library-card">
+        <h3 class="card-title">A Song of Ice and Fire</h3>
+        <h4>Author:</h4>
+        <p>George R R Martin Junior</p>
+        <h4>Pages:</h4>
+        <p>365262727</p>
+        <h4>Read:</h4>
+        <p>Not read</p>
+      </div>
+
+      <div class="library-card">
+        <p>Title: test</p>
+        <p>Author: test</p>
+        <p>Pages: test</p>
+      </div>
+    </div>
+    <div class="create-book">
+      <div class="book-form">
+        <label for="author">Author: </label>
+        <input type="text" name="author" id="author">
+        <label for="title">Title: </label>
+        <input type="text" name="title" id="title">
+        <label for="pages">Pages: </label>
+        <input type="number" name="pages" id="pages">
+        <label for="read">Read: </label>
+        <select name="read" id="read">
+          <option value="true">Read</option>
+          <option value="false">Not read</option>
+        </select>
+        <button class="form-button">Add</button>
+      </div>
+    </div>
+    <button class="add-book">Add book</button>
+  </div>
+</body>
+
+</html>
