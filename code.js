@@ -17,28 +17,35 @@ Book.prototype.toggleRead = function () {
 
 class Card {
   constructor() {
+    // Create the library card div and add class
     this.card = document.createElement('div');
     this.card.classList.add('library-card');
+    // Create the title element and add class
     this.title = document.createElement('h3');
     this.title.classList.add('card-title');
+    // Create the author element and add class
     this.author = document.createElement('h4');
     this.author.classList.add('card-author');
     this.author.innerHTML = "Author:";
     this.authorText = document.createElement('p');
     this.authorText.classList.add('card-text');
+    // Create the page count, and add class
     this.pages = document.createElement('h4');
     this.pages.classList.add('card-pages');
     this.pages.innerHTML = "Pages:"
     this.pageText = document.createElement('p');
     this.pageText.classList.add('card-text');
+    // Create the read status element, and add class
     this.read = document.createElement('h4');
     this.read.classList.add('card-read');
     this.read.innerHTML = "Status:"
     this.statusText = document.createElement('p');
     this.statusText.classList.add('card-text');
+    // Create the read status update button, and add class
     this.toggleRead = document.createElement('button');
     this.toggleRead.classList.add('toggle-read');
-    this.toggleRead.innerHTML = "Read?";
+    this.toggleRead.innerHTML = "Read";
+    // Create the delete element, and add class and attributes
     this.deleteBook = document.createElement('img');
     this.deleteBook.classList.add('delete-book');
     this.deleteBook.src = "./trash-svgrepo-com.svg";
@@ -46,6 +53,25 @@ class Card {
   }
 }
 const library = [];
+
+document.addEventListener('click', (e) => {
+  console.log(e);
+  if (e.target.alt === "delete") {
+    const id = e.target.parentElement.id;
+    console.log(e.target.parentElement.id)
+    library.splice(id, 1);
+    renderLibrary();
+  }
+})
+
+document.addEventListener('click', (e) => {
+  const idSplit = e.target.id.split(' ');
+  if (idSplit[1] === "status") {
+    library[idSplit[0]].toggleRead();
+    console.log(idSplit)
+    renderLibrary();
+  }
+})
 
 const form = {
   author: document.getElementById('author'),
@@ -56,14 +82,13 @@ const form = {
     this.author.value = "";
     this.title.value = "";
     this.pages.value = "";
+  },
+  addBook() {
+    addBookToArray(this.title.value, this.author.value, this.pages.value, this.read.value);
+    this.reset();
   }
 }
 
-const bookForm = document.querySelector(".create-book")
-const displayFormButton = document.querySelector(".add-book");
-displayFormButton.addEventListener('click', displayForm)
-
-const libraryList = document.querySelector('.library-list');
 function displayForm() {
   if (bookForm.style.display === "block") {
     bookForm.style.display = "none";
@@ -73,40 +98,30 @@ function displayForm() {
 }
 
 const addBookButton = document.querySelector('.form-button');
-addBookButton.addEventListener('click', () => {
-  displayForm();
 
+const displayFormButton = document.querySelector(".add-book");
+
+displayFormButton.addEventListener('click', displayForm)
+
+addBookButton.addEventListener('click', () => {
+  form.addBook();
+  displayForm();
 })
 
-function createCard() {
-  const card = document.createElement('div');
-  card.classList.add('library-card');
-  const title = document.createElement('h3');
-  title.classList.add('card-title');
-  const author = document.createElement('h4');
-  author.classList.add('card-author');
-  author.innerHTML = "Author:"
-  const pages = document.createElement('h4');
-  pages.classList.add('card-pages');
-  pages.innerHTML = "Pages:"
-  const read = document.createElement('h4');
-  read.classList.add('card-read');
-  read.innerHTML = "Status:"
-  const toggleRead = document.createElement('button');
-  toggleRead.innerHTML = "Read?";
-  toggleRead.classList.add('toggle-read');
-  const deleteBook = document.createElement('img');
-  deleteBook.classList.add('delete-book');
-  deleteBook.src = "./trash-svgrepo-com.svg";
-  deleteBook.alt = "delete";
-}
+const bookForm = document.querySelector(".create-book");
 
-function addDetails() {
+
+
+const libraryList = document.querySelector('.library-list');
+
+
+function addBookToDom(obj, idx) {
   const card = new Card();
-  card.title.innerHTML = "A Song of Ice and Fire";
-  card.authorText.innerHTML = "George R. R. Martin";
-  card.pageText.innerHTML = "314";
-  card.statusText.innerHTML = "Not read";
+  card.title.innerHTML = obj.title;
+  card.authorText.innerHTML = obj.author;
+  card.pageText.innerHTML = obj.pages;
+  card.statusText.innerHTML = obj.read ? "Read" : "Not read";
+  card.toggleRead.id = `${idx} status`;
   card.card.appendChild(card.title);
   card.card.appendChild(card.author);
   card.card.appendChild(card.authorText);
@@ -116,7 +131,24 @@ function addDetails() {
   card.card.appendChild(card.statusText);
   card.card.appendChild(card.toggleRead);
   card.card.appendChild(card.deleteBook);
+  card.card.id = idx;
   libraryList.appendChild(card.card);
 }
 
+function addBookToArray(title, author, pages, read) {
+  library.push(new Book(title, author, pages, read))
+  renderLibrary();
+}
 
+addBookToArray("Harry Potter", "Transpohbia", 151, false)
+addBookToArray("Harry Potter 2", "Transpohbia", 345, false)
+addBookToArray("Lord of the Rings", "J.R.R Tolkien", 1000, true)
+
+function renderLibrary() {
+  while (libraryList.lastElementChild) {
+    libraryList.removeChild(libraryList.lastElementChild)
+  }
+  library.forEach((el, idx) => {
+    addBookToDom(el, idx);
+  })
+}
