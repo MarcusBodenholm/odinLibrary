@@ -1,3 +1,7 @@
+"use strict";
+
+import { Card } from "./modules/card.js";
+
 class Book {
   constructor(title, author, pages, read) {
     this.title = title;
@@ -15,43 +19,6 @@ Book.prototype.toggleRead = function () {
   return this;
 }
 
-class Card {
-  constructor() {
-    // Create the library card div and add class
-    this.card = document.createElement('div');
-    this.card.classList.add('library-card');
-    // Create the title element and add class
-    this.title = document.createElement('h3');
-    this.title.classList.add('card-title');
-    // Create the author element and add class
-    this.author = document.createElement('h4');
-    this.author.classList.add('card-author');
-    this.author.innerHTML = "Author:";
-    this.authorText = document.createElement('p');
-    this.authorText.classList.add('card-text');
-    // Create the page count, and add class
-    this.pages = document.createElement('h4');
-    this.pages.classList.add('card-pages');
-    this.pages.innerHTML = "Pages:"
-    this.pageText = document.createElement('p');
-    this.pageText.classList.add('card-text');
-    // Create the read status element, and add class
-    this.read = document.createElement('h4');
-    this.read.classList.add('card-read');
-    this.read.innerHTML = "Status:"
-    this.statusText = document.createElement('p');
-    this.statusText.classList.add('card-text');
-    // Create the read status update button, and add class
-    this.toggleRead = document.createElement('button');
-    this.toggleRead.classList.add('toggle-read');
-    this.toggleRead.innerHTML = "Read";
-    // Create the delete element, and add class and attributes
-    this.deleteBook = document.createElement('img');
-    this.deleteBook.classList.add('delete-book');
-    this.deleteBook.src = "./trash-svgrepo-com.svg";
-    this.deleteBook.alt = "delete";
-  }
-}
 const library = [];
 
 document.addEventListener('click', (e) => {
@@ -67,14 +34,6 @@ document.addEventListener('click', (e) => {
   if (idSplit[1] === "status") {
     library[idSplit[0]].toggleRead();
     renderLibrary();
-    let button = document.getElementById(e.target.id);
-    if (button.innerHTML === "Read") {
-      console.log(button)
-      button.innerHTML = "Not Read";
-    } else {
-      console.log(button)
-      button.innerHTML = "Read";
-    }
   }
 })
 
@@ -89,8 +48,13 @@ const form = {
     this.pages.value = "";
   },
   addBook() {
-    addBookToArray(this.title.value, this.author.value, this.pages.value, this.read.value);
-    this.reset();
+    if (isNaN(Number(this.pages.value))) {
+      this.pages.value = "";
+      alert('Please input numbers in the pages field');
+    } else {
+      addBookToArray(this.title.value, this.author.value, this.pages.value, this.read.value);
+      this.reset();
+    }
   }
 }
 
@@ -109,8 +73,16 @@ const displayFormButton = document.querySelector(".add-book");
 displayFormButton.addEventListener('click', displayForm)
 
 addBookButton.addEventListener('click', () => {
-  form.addBook();
-  displayForm();
+  if (form.author.value !== "" &&
+    form.title.value !== "" &&
+    form.pages.value !== "") {
+    form.addBook();
+    displayForm();
+  } else if (form.pages.value === "") {
+    alert('Please fill in a number of pages')
+  } else {
+    alert('Please fill in all the fields');
+  }
 })
 
 const bookForm = document.querySelector(".create-book");
@@ -122,7 +94,8 @@ function addBookToDom(obj, idx) {
   card.title.innerHTML = obj.title;
   card.authorText.innerHTML = obj.author;
   card.pageText.innerHTML = obj.pages;
-  card.statusText.innerHTML = obj.read ? "Read" : "Not read";
+  card.statusText.innerHTML = obj.read ? "Read" : "In Progress";
+  card.toggleRead.innerHTML = "Update status"
   card.toggleRead.id = `${idx} status`;
   card.card.appendChild(card.title);
   card.card.appendChild(card.author);
@@ -151,8 +124,21 @@ function addBookToArray(title, author, pages, read) {
   renderLibrary();
 }
 
-addBookToArray("Harry Potter", "J.K Rowling", 151, false)
-addBookToArray("Harry Potter 2", "J.K Rowling", 345, false)
-addBookToArray("Lord of the Rings", "J.R.R Tolkien", 1000, true)
+function removeContent() {
+  while (libraryList.lastElementChild) {
+    libraryList.removeChild(libraryList.lastElementChild)
+  }
+}
+const removeButton = document.getElementById('remove-content');
+removeButton.addEventListener('click', removeContent);
 
-
+function dummyContent() {
+  addBookToArray("The Way of Kings", "Brandon Sanderson", 1007, true);
+  addBookToArray("A Game of Thrones", "George R. R. Martin", 694, true);
+  addBookToArray("The Name of the Wind", "Patrick Rothfuss", 662, false);
+  addBookToArray("The Return of the King", "J. R. R. Tolkien", 416, true);
+  addBookToArray("American Gods", "Neil Gaiman", 465, false);
+  addBookToArray("The Last Unicorn", "Peter S. Beagle", 218, false);
+};
+const dummyButton = document.getElementById('dummy-content');
+dummyButton.addEventListener('click', dummyContent);

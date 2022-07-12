@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles.css">
-  <script src="./code.js" defer></script>
+  <script type="module" src="./code.js" defer></script>
   <title>Library</title>
 </head>
 
@@ -16,6 +16,10 @@
     <p class="header-text">
       This is a simple library where you can store the books you are currently reading or have already read.
     </p>
+    <div class="header-buttons">
+      <button id="dummy-content">Populate library</button>
+      <button id="remove-content">Remove all items</button>
+    </div>
     <div class="library-list">
     </div>
     <div class="create-book">

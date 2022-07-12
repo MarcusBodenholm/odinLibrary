@@ -1,5 +1,13 @@
 * {
   box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+:root {
+  --button-active: hsl(175, 77%, 16%);
+  --button-hover: hsl(175, 77%, 36%);
+  --button-color: hsl(175, 77%, 26%);
+  --button-text: white;
 }
 
 h1,
@@ -31,6 +39,14 @@ h1 {
 .header-text {
   font-size: 1rem;
   font-weight: 500;
+}
+
+.header-buttons {
+  margin-top: 10px;
+}
+
+.header-buttons>button {
+  border-radius: 5px;
 }
 
 .container {
@@ -80,6 +96,19 @@ h1 {
   transition: all300ms ease;
 }
 
+button {
+  background-color: var(--button-color);
+  color: var(--button-text)
+}
+
+button:hover {
+  background-color: var(--button-hover);
+}
+
+button:active {
+  background-color: var(--button-active);
+}
+
 button:hover,
 .delete-book:hover {
   transform: scale(0.9);
@@ -93,18 +122,8 @@ button:active,
 .toggle-read {
   border-radius: 10px;
   border: none;
-  color: white;
-  background-color: hsl(175, 77%, 26%);
   box-shadow: 1px 1px 4px 0px rgba(5, 5, 5, 0.30);
-
-}
-
-.toggle-read:hover {
-  background-color: hsl(175, 77%, 36%)
-}
-
-.toggle-read:active {
-  background-color: hsl(175, 77%, 16%)
+  width: 110px;
 }
 
 .library-card>h4 {
@@ -125,8 +144,8 @@ button:active,
   height: 240px;
   bottom: 40%;
   border-radius: 10px;
-  background-color: hsl(175, 77%, 26%);
-  box-shadow: 1px 3px 8px 0px rgba(5, 5, 5, 0.70);
+  background-color: var(--button-color);
+  box-shadow: 1px 3px 0px 3000px rgba(5, 5, 5, 0.65);
 
 }
 
@@ -160,28 +179,29 @@ button:active,
   justify-self: center;
   border: none;
   border-radius: 5px;
+  color: white;
+  background-color: var(--button-active)
+}
+
+.form-button:hover {
+  background-color: var(--button-hover);
+}
+
+.form-button:active {
+  background-color: var(--button-color);
 }
 
 .add-book {
   position: fixed;
   left: 70%;
   bottom: 3%;
+  z-index: 2;
   height: 50px;
   width: 100px;
   border-radius: 25px;
   border: none;
-  background-color: hsl(175, 77%, 26%);
-  color: white;
   font-size: 1rem;
   font-weight: bold;
-}
-
-.add-book:hover {
-  background-color: hsl(175, 77%, 36%);
-}
-
-.add-book:active {
-  background-color: hsl(175, 77%, 16%);
 }
 
 @media (min-width: 1070px) and (max-width: 1400px) {
