@@ -57,7 +57,21 @@ const form = {
     }
   }
 }
+const validate = (() => {
+  const author = document.getElementById('author')
+  const title = document.getElementById('title')
+  const pages = document.getElementById('pages')
+  const read = document.getElementById('read')
 
+  const isValid = () => {
+    if (author.value !== "" && title.value !== "" && pages.value !== "") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  return { isValid }
+})()
 function displayForm() {
   if (bookForm.style.display === "block") {
     bookForm.style.display = "none";
@@ -73,15 +87,12 @@ const displayFormButton = document.querySelector(".add-book");
 displayFormButton.addEventListener('click', displayForm)
 
 addBookButton.addEventListener('click', () => {
-  if (form.author.value !== "" &&
-    form.title.value !== "" &&
-    form.pages.value !== "") {
+  const valid = validate.isValid();
+  if (valid) {
     form.addBook();
     displayForm();
-  } else if (form.pages.value === "") {
-    alert('Please fill in a number of pages')
   } else {
-    alert('Please fill in all the fields');
+    return;
   }
 })
 

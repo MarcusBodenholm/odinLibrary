@@ -204,6 +204,16 @@ button:active,
   font-weight: bold;
 }
 
+input:invalid {
+  border-color: red;
+  background-color: pink;
+  color: red
+}
+
+input:focus:invalid {
+  outline: none;
+}
+
 @media (min-width: 1070px) and (max-width: 1400px) {
   body {
     align-items: center;
