@@ -4,7 +4,7 @@ A project to make a library page using HTML, CSS & JavaScript, as part of the Od
 This library page includes the ability to add books, including the author's name, title and number of pages. From there you can change the status of whether the book has been read or not, as well as delete entries. A populate button is presented to add pre-defined books to it. 
 The page dynamically resizes to work for all screen sizes. 
 
-**Live preview:** [here](https://shedcape.github.io/odinLibrary/)
+**Live preview:** [here](https://marcusbodenholm.github.io/odinLibrary/)
 
 ## Built using
 
